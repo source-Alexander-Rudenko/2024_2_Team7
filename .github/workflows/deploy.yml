@@ -15,7 +15,7 @@ jobs:
 
       - name: Get Commit Hash
         id: vars
-        run: echo "COMMIT_HASH=${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v0.1.7
@@ -33,4 +33,4 @@ jobs:
             echo "Building Docker containers with commit hash..."
             COMMIT_HASH=${{ env.COMMIT_HASH }} docker compose build --build-arg COMMIT_HASH=${{ env.COMMIT_HASH }}
             echo "Starting Docker containers..."
-            docker compose up -d
+            COMMIT_HASH=${{ env.COMMIT_HASH }} docker compose up -d
