@@ -1,12 +1,12 @@
 services:
   auth_service:
+    container_name: auth_service_${COMMIT_HASH}
     build:
       context: .
       dockerfile: ./internal/auth/Dockerfile
     ports:
       - "50051:50051"
       - "9091:9091"
-
     depends_on:
       postgres:
         condition: service_healthy
@@ -18,13 +18,13 @@ services:
       - .:/app
 
   user_service:
+    container_name: user_service_${COMMIT_HASH}
     build:
       context: .
       dockerfile: ./internal/user/Dockerfile
     ports:
       - "50052:50052"
       - "9092:9092"
-
     depends_on:
       postgres:
         condition: service_started
@@ -34,13 +34,13 @@ services:
       - .:/app
 
   event_service:
+    container_name: event_service_${COMMIT_HASH}
     build:
       context: .
       dockerfile: ./internal/event/Dockerfile
     ports:
       - "50053:50053"
       - "9093:9093"
-
     depends_on:
       postgres:
         condition: service_healthy
@@ -50,34 +50,20 @@ services:
       - .:/app
 
   image_service:
-
+    container_name: image_service_${COMMIT_HASH}
     build:
       context: .
       dockerfile: ./internal/image/Dockerfile
     ports:
       - "50054:50054"
       - "9094:9094"
-
     env_file:
       - .env
     volumes:
       - .:/app
 
-  # csat_service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./internal/csat/Dockerfile
-  #   ports:
-  #     - "50055:50055"
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - .:/app
-
   server_service:
+    container_name: server_service_${COMMIT_HASH}
     build:
       context: .
       dockerfile: Dockerfile
@@ -98,8 +84,8 @@ services:
       - .:/app
 
   prometheus:
+    container_name: prometheus_${COMMIT_HASH}
     image: prom/prometheus:latest
-    container_name: prometheus
     restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
@@ -115,7 +101,6 @@ services:
 
   postgres:
     image: postgis/postgis:latest
-    container_name: my_pg_container
     restart: unless-stopped
     env_file:
       - .env
@@ -128,18 +113,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
   redis:
     image: redis:latest
     ports:
-      - "6379:6379" 
-      
+      - "6379:6379"
+
   node_exporter:
     image: prom/node-exporter:latest
-    container_name: node_exporter
     restart: unless-stopped
     ports:
       - "9100:9100"
- 
 
 volumes:
   postgres_data:
@@ -149,4 +133,3 @@ volumes:
 networks:
   default:
     name: team7_network
-
