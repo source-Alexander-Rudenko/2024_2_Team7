@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./internal/auth/Dockerfile
+      args:
+        COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "50051:50051"
       - "9091:9091"
@@ -22,6 +24,8 @@ services:
     build:
       context: .
       dockerfile: ./internal/user/Dockerfile
+      args:
+        COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "50052:50052"
       - "9092:9092"
@@ -38,6 +42,8 @@ services:
     build:
       context: .
       dockerfile: ./internal/event/Dockerfile
+      args:
+        COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "50053:50053"
       - "9093:9093"
@@ -54,6 +60,8 @@ services:
     build:
       context: .
       dockerfile: ./internal/image/Dockerfile
+      args:
+        COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "50054:50054"
       - "9094:9094"
@@ -67,6 +75,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "8080:8080"
     depends_on:
@@ -84,7 +94,7 @@ services:
       - .:/app
 
   prometheus:
-    container_name: prometheus_${COMMIT_HASH}
+    container_name: prometheus
     image: prom/prometheus:latest
     restart: unless-stopped
     volumes:

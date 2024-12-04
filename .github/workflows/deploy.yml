@@ -15,7 +15,7 @@ jobs:
 
       - name: Get Commit Hash
         id: vars
-        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: echo "COMMIT_HASH=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v0.1.7
