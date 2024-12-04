@@ -1,4 +1,3 @@
-#file: noinspection YAMLSchemaValidation
 name: Deploy with Commit Hash
 
 on:
