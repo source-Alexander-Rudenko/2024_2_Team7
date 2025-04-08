@@ -13,7 +13,7 @@ scrape_configs:
       - targets: ['auth_service:9091']
   - job_name: 'user_server'
     static_configs:
-      - targets: ['user_service:9092']
+      - targets: ['user_service:9097']
   - job_name: 'image_server'
     static_configs:
       - targets: ['image_service:9094']

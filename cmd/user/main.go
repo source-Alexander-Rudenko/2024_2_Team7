@@ -61,7 +61,7 @@ func main() {
 
 	go func() {
 		http.Handle("/metrics", promhttp.Handler())
-		metricsAddr := ":9092"
+		metricsAddr := ":9097"
 		log.Printf("Метрики доступны на %s/metrics", metricsAddr)
 		if err := http.ListenAndServe(metricsAddr, nil); err != nil {
 			log.Fatalf("Не удалось запустить HTTP-сервер для метрик: %v", err)
