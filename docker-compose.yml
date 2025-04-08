@@ -29,7 +29,7 @@ services:
         COMMIT_HASH: ${COMMIT_HASH}
     ports:
       - "50052:50052"
-      - "9092:9092"
+      - "9097:9097"
 
     depends_on:
       postgres:
